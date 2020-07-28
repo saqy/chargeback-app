@@ -154,6 +154,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import "../assets/variable.scss";
 @import "../assets/global.scss";
 .main-content {
     flex: 1;
@@ -173,5 +174,14 @@ export default {
         margin-left: 0;
     }
 }
-
+.merchant-row {
+    .paper-box_head {
+        padding-left: 30px;
+        padding-right: 30px;
+        border-color: #e1e7f0;
+        .cb-sub-title {
+            margin-bottom: 0;
+        }
+    }
+}
 </style>

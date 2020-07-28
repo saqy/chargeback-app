@@ -1,10 +1,4 @@
 
-$darkBlue: #0c1224;
-$lightBlue: #0892d0;
-$blue: #1b2133;
-$gray: #e4ebf7;
-$primaryText: #515974;
-
 body {
     font-family: 'Montserrat', sans-serif;
     margin: 0;
@@ -230,5 +224,27 @@ button {
         padding: 8px 10px;
         list-style: none;
         color: '#5c5e67';
+    }
+}
+
+.mobile-menu-btn {
+    width: 32px;
+    position: fixed;
+    display: none;
+    top: 10px;
+    background-color: #0892d0;
+    padding: 8px;
+    .bar {
+        height: 2px;
+        width: 100%;
+        background-color: $gray;
+        margin-bottom: 5px;
+        display: block;
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+    @media screen and (max-width: 767px) {
+        display: block;
     }
 }

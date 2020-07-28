@@ -11,93 +11,102 @@
         >{{ option.name }}</option>
       </select>
     </template> -->
-    <div class="cb-filter-group">
-        <div class="cb-checkbox">
-            <input class="checkbox" type="checkbox" id="checkbox1">
-            <label class="label" for="checkbox1">
-                <div class="check-mark">
-                </div>
-            </label>
-        </div>
+    <div class="paper-box">
+      <div class="paper-box_head">
+          <h3 class="cb-sub-title">T1 Chargeback Summary for Sept. 1-31</h3>
+          <p class="text text-red">results in modal= total # CB, Total QV Total CV Total amount Total fees</p>
+      </div>
+      <div class="paper-box_content">
+          <div class="cb-filter-group">
+              <div class="cb-checkbox">
+                  <input class="checkbox" type="checkbox" id="checkbox1">
+                  <label class="label" for="checkbox1">
+                      <div class="check-mark">
+                      </div>
+                  </label>
+              </div>
 
-        <div class="show-entries">
-            <span class="label">show</span>
-            <div class="entries-count">
-                <input v-model="perPage" type="number" value="10">
-                <div class="entries-btns">
-                    <button class="up-btn">
-                    </button>
-                    <button class="down-btn">
-                    </button>
-                </div>
-            </div>
-            <span class="label">Entries</span>
-        </div>
+              <div class="show-entries">
+                  <span class="label">show</span>
+                  <div class="entries-count">
+                      <input v-model="perPage" type="number" value="10">
+                      <div class="entries-btns">
+                          <button class="up-btn">
+                          </button>
+                          <button class="down-btn">
+                          </button>
+                      </div>
+                  </div>
+                  <span class="label">Entries</span>
+              </div>
 
-        
-        <div class="cb-filter">
-            <div class="cb-filter_btn bg-gray">
-                <span class="cb-filter_text">Actions</span>
-                <span class="arrow-icon">
-                </span>
-            </div>
-            <ul class="cb-filter_list">
-                <li class="cb-filter_item"
-                v-for="option in columns"
-                v-bind:value="option.name"
-                :key="option.name"
-                >{{ option.name }}</li>   
-            </ul>
-        </div>
-        <button class="cb-btn bg-blue">
-            Submit
-        </button>
+              
+              <div class="cb-filter">
+                  <div class="cb-filter_btn bg-gray">
+                      <span class="cb-filter_text">Actions</span>
+                      <span class="arrow-icon">
+                      </span>
+                  </div>
+                  <ul class="cb-filter_list">
+                      <li class="cb-filter_item"
+                      v-for="option in columns"
+                      v-bind:value="option.name"
+                      :key="option.name"
+                      >{{ option.name }}</li>   
+                  </ul>
+              </div>
+              <button class="cb-btn bg-blue">
+                  Submit
+              </button>
 
-        <div class="cb-filter ml-auto">
-            <div class="cb-filter_btn bg-gray">
-                <span class="cb-filter_text">Filter</span>
-                <span class="arrow-icon">
-                </span>
-            </div>
-            <ul class="cb-filter_list">
-                <li class="cb-filter_item">Item</li>   
-                <li class="cb-filter_item">Item</li>   
-                <li class="cb-filter_item">Item</li>   
-                <li class="cb-filter_item">Item</li>   
-                <li class="cb-filter_item">Item</li>   
-                <li class="cb-filter_item">Item</li>   
-            </ul>
-        </div>
-        <button class="cb-btn bg-blue">
-            Export CSV
-        </button>
+              <div class="cb-filter ml-auto">
+                  <div class="cb-filter_btn bg-gray">
+                      <span class="cb-filter_text">Filter</span>
+                      <span class="arrow-icon">
+                      </span>
+                  </div>
+                  <ul class="cb-filter_list">
+                      <li class="cb-filter_item">Item</li>   
+                      <li class="cb-filter_item">Item</li>   
+                      <li class="cb-filter_item">Item</li>   
+                      <li class="cb-filter_item">Item</li>   
+                      <li class="cb-filter_item">Item</li>   
+                      <li class="cb-filter_item">Item</li>   
+                  </ul>
+              </div>
+              <button class="cb-btn bg-blue">
+                  Export CSV
+              </button>
+          </div>
+          <div class="table-responsive">
+            <vuetable
+              ref="vuetable"
+              :api-mode="false"
+              :fields="columns"
+              :per-page="perPage"
+              :data-manager="dataManager"
+              pagination-path="pagination"
+              @vuetable:pagination-data="onPaginationData"
+            >
+              <div slot="actions" slot-scope="props">
+                <button class="ui small button" @click="onActionClicked('view-item', props.rowData)">
+                  <i class="zoom icon"></i>
+                </button>
+                <button class="ui small button" @click="onActionClicked('edit-item', props.rowData)">
+                  <i class="edit icon"></i>
+                </button>
+                <button class="ui small button" @click="onActionClicked('delete-item', props.rowData)">
+                  <i class="delete icon"></i>
+                </button>
+              </div>
+            </vuetable>
+          </div>
+          <div class="cb-pagination">
+            <vuetable-pagination ref="pagination" @vuetable-pagination:change-page="onChangePage"></vuetable-pagination>
+          </div>
+      </div>
     </div>
-    <div class="table-responsive">
-      <vuetable
-        ref="vuetable"
-        :api-mode="false"
-        :fields="columns"
-        :per-page="perPage"
-        :data-manager="dataManager"
-        pagination-path="pagination"
-        @vuetable:pagination-data="onPaginationData"
-      >
-        <div slot="actions" slot-scope="props">
-          <button class="ui small button" @click="onActionClicked('view-item', props.rowData)">
-            <i class="zoom icon"></i>
-          </button>
-          <button class="ui small button" @click="onActionClicked('edit-item', props.rowData)">
-            <i class="edit icon"></i>
-          </button>
-          <button class="ui small button" @click="onActionClicked('delete-item', props.rowData)">
-            <i class="delete icon"></i>
-          </button>
-        </div>
-      </vuetable>
-    </div>
-    <div class="cb-pagination">
-      <vuetable-pagination ref="pagination" @vuetable-pagination:change-page="onChangePage"></vuetable-pagination>
-    </div>
+    
   </div>
 </template>
 
@@ -194,7 +203,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../assets/global.scss";
+@import "../assets/variable.scss";
 .table-content-row {
         .paper-box_head {
             padding-left: 30px;

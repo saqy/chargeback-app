@@ -98,7 +98,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../assets/global.scss";
+@import "../assets/variable.scss";
 .account-row {
         margin-left: -8px;
         margin-right: -8px;
@@ -159,6 +159,7 @@ export default {
             }
         }
         .cb-sub-title {
+            font-size: 19px;
             @media screen and (max-width: 1900px) {
                 font-size: 16px;
             }

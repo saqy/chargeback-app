@@ -191,16 +191,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../assets/global.scss";
+@import "../assets/variable.scss";
 .merchant-row {
-        .paper-box_head {
-            padding-left: 30px;
-            padding-right: 30px;
-            border-color: #e1e7f0;
-            .cb-sub-title {
-                margin-bottom: 0;
-            }
-        }
         .sub-container {
             max-width: 1430px;
             margin: 0 auto;
