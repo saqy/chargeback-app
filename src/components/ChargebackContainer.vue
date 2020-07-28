@@ -1,12 +1,99 @@
 <template>
   <div id="app">
     <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-    <cb-summary :cbData="cbData" :columns="columns" />
+    <sidebar/>
+    <div class="main-content">
+      <div class="main-container">
+      <stats-card/>
+          <div class="cb-row chart-row">
+              <div class="paper-box">
+                  <div class="paper-box_head">
+                      <h3 class="cb-sub-title">Chargeback Overview</h3>
+                  </div>
+                  <div class="paper-box_content">
+                      <div class="cb-filter-group">
+                          <div class="cb-filter">
+                              <div class="cb-filter_btn no-border">
+                                  <span class="cb-filter_text">Month</span>
+                                  <span class="arrow-icon">
+                                  </span>
+                              </div>
+                              <ul class="cb-filter_list">
+                                  <li class="cb-filter_item">Item</li>   
+                                  <li class="cb-filter_item">Item</li>   
+                                  <li class="cb-filter_item">Item</li>   
+                                  <li class="cb-filter_item">Item</li>   
+                                  <li class="cb-filter_item">Item</li>   
+                                  <li class="cb-filter_item">Item</li>   
+                              </ul>
+                          </div>
+                          <div class="cb-filter">
+                              <div class="cb-filter_btn">
+                                  <span class="cb-filter_text">Range</span>
+                                  <span class="arrow-icon">
+                                  </span>
+                              </div>
+                              <ul class="cb-filter_list">
+                                  <li class="cb-filter_item">Item</li>   
+                                  <li class="cb-filter_item">Item</li>   
+                                  <li class="cb-filter_item">Item</li>   
+                                  <li class="cb-filter_item">Item</li>   
+                                  <li class="cb-filter_item">Item</li>   
+                                  <li class="cb-filter_item">Item</li>   
+                              </ul>
+                          </div>
+                          <div class="cb-filter">
+                              <div class="cb-filter_btn bg-blue">
+                                  <span class="cb-filter_text">Last</span>
+                                  <span class="arrow-icon white">
+                                  </span>
+                              </div>
+                              <ul class="cb-filter_list">
+                                  <li class="cb-filter_item">Item</li>   
+                                  <li class="cb-filter_item">Item</li>   
+                                  <li class="cb-filter_item">Item</li>   
+                                  <li class="cb-filter_item">Item</li>   
+                                  <li class="cb-filter_item">Item</li>   
+                                  <li class="cb-filter_item">Item</li>   
+                              </ul>
+                          </div>
+                          <div class="cb-filter">
+                              <div class="cb-filter_btn bg-blue">
+                                  <span class="cb-filter_text">Current</span>
+                                  <span class="arrow-icon white">
+                                  </span>
+                              </div>
+                              <ul class="cb-filter_list">
+                                  <li class="cb-filter_item">Item</li>   
+                                  <li class="cb-filter_item">Item</li>   
+                                  <li class="cb-filter_item">Item</li>   
+                                  <li class="cb-filter_item">Item</li>   
+                                  <li class="cb-filter_item">Item</li>   
+                                  <li class="cb-filter_item">Item</li>   
+                              </ul>
+                          </div>
+
+                          <button class="cb-btn">
+                              Today
+                          </button>
+                      </div>
+                      <overview />
+                  </div>
+              </div>
+          </div>
+          <merchant-health />
+          <cb-summary :cbData="cbData" :columns="columns" />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import CbSummary from "./Summary";
+import Overview from "./Overview";
+import MerchantHealth from "./MerchantHealth";
+import StatsCard from "./StatsCard";
+import Sidebar from "./Sidebar";
 export default {
   name: "ChargebackContainer",
   data: () => {
@@ -16,7 +103,11 @@ export default {
     };
   },
   components: {
-    CbSummary
+    CbSummary,
+    Overview,
+    MerchantHealth,
+    StatsCard,
+    Sidebar
   },
 
   created: function() {
@@ -62,13 +153,25 @@ export default {
 };
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style lang="scss">
+@import "../assets/global.scss";
+.main-content {
+    flex: 1;
+    background-color: $gray;
+    width: calc(100% - 340px);
+    margin-left: 340px;
+    @media screen and (max-width: 1900px) {
+        width: calc(100% - 300px);
+        margin-left: 300px;
+    }
+    @media screen and (max-width: 1599px) {
+        width: calc(100% - 280px);
+        margin-left: 280px;
+    }
+    @media screen and (max-width: 1279px) {
+        width: 100%;
+        margin-left: 0;
+    }
 }
+
 </style>

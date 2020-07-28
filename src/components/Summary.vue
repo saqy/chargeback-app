@@ -385,6 +385,7 @@ export default {
                 font-weight: 500;
                 @media screen and (max-width: 1599px) {
                     font-size: 13px;
+                    padding: 20px 0;
                 }
                 &:first-child {
                     padding-left: 15px;
@@ -396,8 +397,8 @@ export default {
             }
         }
         .cb-pagination {
-            margin-top: 40px;
-            margin-bottom: 60px;
+            padding-top: 40px;
+            padding-bottom: 60px;
             padding-left: 100px;
             display: flex;
             @media screen and (max-width: 767px) {

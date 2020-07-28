@@ -201,6 +201,9 @@ button {
             background-repeat: no-repeat;
             background-size: 15px;
             background-position: center;
+            &.white {
+                background-image: url("../assets/images/white-arrow-icon.png");
+            }
             @media screen and (max-width: 991px) {
                 width: 12px;
             }
