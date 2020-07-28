@@ -1,4 +1,10 @@
 <template>
+   <div>
+    <div class="mobile-menu-btn">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+    </div>
    <div class="sidebar">
         <div class="sidebar_btn-wrapper">
             <div class="sidebar_btn">
@@ -123,7 +129,8 @@
                 </li>
             </ul>
         </div>
-    </div>
+    </div> 
+   </div>
 </template>
 
 <script>
@@ -172,7 +179,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../assets/global.scss";
+@import "../assets/variable.scss";
 .sidebar {
     max-width: 340px;
     width: 100%;
@@ -229,6 +236,9 @@ export default {
             &:last-child {
                 margin-bottom: 0;
             }
+        }
+        @media screen and (max-width: 767px) {
+            
         }
     }
     &_profile-wrapper {

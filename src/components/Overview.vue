@@ -50,7 +50,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../assets/global.scss";
+@import "../assets/variable.scss";
 .chart-row {
         .paper-box_head {
             padding-left: 30px;
