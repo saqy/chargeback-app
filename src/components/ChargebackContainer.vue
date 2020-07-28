@@ -129,9 +129,9 @@ export default {
       let headers = lines[0].split(",");
       for (var i = 1; i < lines.length; i++) {
         let obj = {};
-        let currentline = lines[i].split(",");
+        let currentline = lines[i].split(/,(?=(?:[^"]*"[^"]*")*(?![^"]*"))/)
         for (let j = 0; j < headers.length; j++) {
-          obj[headers[j]] = currentline[j];
+          obj[headers[j]] = currentline[j].replace(/"/g, "");
         }
         result.push(obj);
       }
