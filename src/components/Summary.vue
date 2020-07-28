@@ -101,8 +101,28 @@
               </div>
             </vuetable>
           </div>
-          <div class="cb-pagination">
-            <vuetable-pagination ref="pagination" @vuetable-pagination:change-page="onChangePage"></vuetable-pagination>
+          <div class="table-bottom-wrapper">
+            <div class="cb-pagination">
+              <vuetable-pagination ref="pagination" @vuetable-pagination:change-page="onChangePage"></vuetable-pagination>
+            </div>
+            <div class="table-bottom-right-side">
+              <div class="cb-filter">
+                  <div class="cb-filter_btn no-border">
+                      <span class="cb-filter_text">10</span>
+                      <span class="arrow-icon">
+                      </span>
+                  </div>
+                  <ul class="cb-filter_list">
+                      <li class="cb-filter_item">Item</li>   
+                      <li class="cb-filter_item">Item</li>   
+                      <li class="cb-filter_item">Item</li>   
+                      <li class="cb-filter_item">Item</li>   
+                      <li class="cb-filter_item">Item</li>   
+                      <li class="cb-filter_item">Item</li>   
+                  </ul>
+              </div>
+              <span class="text">Displaying 1 - 10 of 100 records</span>
+            </div>
           </div>
       </div>
     </div>
@@ -205,6 +225,7 @@ export default {
 <style lang="scss">
 @import "../assets/variable.scss";
 .table-content-row {
+        padding-bottom: 15px;
         .paper-box_head {
             padding-left: 30px;
             padding-right: 30px;
@@ -404,15 +425,16 @@ export default {
                     font-size: 14px;
                 }
             }
+            tbody {
+              tr {
+                &:nth-child(odd){
+                  background-color: #e4ebf7;
+                }
+                }
+            }
         }
         .cb-pagination {
-            padding-top: 40px;
-            padding-bottom: 60px;
-            padding-left: 100px;
             display: flex;
-            @media screen and (max-width: 767px) {
-                padding-left: 20px;
-            }
         }
 
     }
@@ -496,4 +518,46 @@ export default {
             }
         }
     } 
+    .table-bottom-wrapper {
+        display: flex;
+        justify-content: space-between;
+        padding-top: 40px;
+        padding-bottom: 60px;
+        padding-left: 15px;
+        padding-right: 15px;
+        max-width: 1300px;
+        margin: 0 auto;
+        flex-wrap: wrap;
+        @media screen and (max-width: 767px) {
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .table-bottom-right-side {
+          display: flex;
+          align-items: center;
+          @media screen and (max-width: 767px) {
+              margin-top: 10px
+          }
+          .text {
+              color: #515974;
+              font-size: 16px;
+              @media screen and (max-width: 767px) {
+                font-size: 13px;
+              }
+          }
+        }
+        .cb-filter_btn {
+            background-color: #e4ebf7;
+            height: 42px;
+            margin-right: 20px;
+            .cb-filter_text {
+              font-size: 18px;
+            }
+            @media screen and (max-width: 767px) {
+              height: 32px;
+              font-size: 16px;
+            }
+        }
+    }
 </style>
