@@ -11,7 +11,7 @@
           <span class="text">Total Chgbk</span>
         </li>
       </ul>
-      <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+      <div id="chartContainer"></div>
     </div>
   </div>
 </template>
@@ -42,30 +42,37 @@ export default {
     window.onload = function() {
       var options = {
         animationEnabled: true,
+        backgroundColor: "#f2f6fc",
         theme: "light2",
-        title: {
-          text: "Monthly Sales Data"
-        },
         axisX: {
           valueFormatString: "MMM"
         },
         axisY: {
-          prefix: "$"
+          gridThickness: 0,
+          prefix: "$",
+          titleFontSize: 10,
+          labelFontSize: 10,
         },
         toolTip: {
-          shared: true
+          shared: true,
+          cornerRadius: 8,
+          backgroundColor: "#515974",
+          fontColor: "#ffffff",
         },
         legend: {
           cursor: "pointer"
         },
         data: [
           {
-            type: "area",
+            type: "splineArea",
             name: "Profit",
             markerBorderColor: "white",
-            markerBorderThickness: 2,
-            showInLegend: true,
+            markerBorderThickness: 0,
+            showInLegend: false,
             yValueFormatString: "$#,##0",
+            color: "#0892d0",
+            markerColor: "#515974",
+            markerSize: 10,
             dataPoints: [
               { x: new Date(2017, 0), y: 4000 },
               { x: new Date(2017, 1), y: 7000 },
@@ -82,12 +89,15 @@ export default {
             ]
           },
           {
-            type: "area",
+            type: "splineArea",
             name: "Profit",
             markerBorderColor: "white",
-            markerBorderThickness: 2,
-            showInLegend: true,
+            markerBorderThickness: 0,
+            showInLegend: false,
             yValueFormatString: "$#,##0",
+            color: "#ead401",
+            markerColor: "#515974",
+            markerSize: 10,
             dataPoints: [
               { x: new Date(2017, 0), y: 5000 },
               { x: new Date(2017, 1), y: 7000 },
@@ -175,22 +185,28 @@ export default {
         position: absolute;
         left: 88px;
         top: 40px;
+        z-index: 2;
         @media screen and (max-width: 1599px) {
           left: 52px;
         }
         @media screen and (max-width: 767px) {
-          left: 30px;
+            left: auto;
+            right: 9px;
+            top: -4px;
         }
       }
       &_item {
         padding: 10px 0;
         display: flex;
+        @media screen and (max-width: 767px) {
+            padding: 4px 0;
+        }
         .text {
           font-size: 20px;
           font-weight: 600;
           color: $primaryText;
           @media screen and (max-width: 767px) {
-            font-size: 17px;
+            font-size: 14px;
           }
         }
         .color-identity {
@@ -199,11 +215,18 @@ export default {
           width: 28px;
           margin-right: 15px;
           @media screen and (max-width: 767px) {
-            height: 20px;
-            width: 20px;
+            height: 16px;
+            width: 16px;
             margin-right: 10px;
           }
         }
+      }
+    }
+    #chartContainer {
+      width: 100%;
+      height: 600px;
+      @media screen and (max-width: 767px) {
+        height: 340px;
       }
     }
   }

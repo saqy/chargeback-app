@@ -41,14 +41,6 @@
 
                     <span class="arrow-icon"></span>
                   </div>
-                  <!-- <ul class="cb-filter_list">
-                                  <li class="cb-filter_item">Item</li>   
-                                  <li class="cb-filter_item">Item</li>   
-                                  <li class="cb-filter_item">Item</li>   
-                                  <li class="cb-filter_item">Item</li>   
-                                  <li class="cb-filter_item">Item</li>   
-                                  <li class="cb-filter_item">Item</li>   
-                  </ul> -->
                 </div>
                 <div class="cb-filter">
                   <div class="cb-filter_btn bg-blue">
