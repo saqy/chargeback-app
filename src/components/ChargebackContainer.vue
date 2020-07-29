@@ -89,6 +89,41 @@
         <cb-summary :cbData="filteredData" :columns="columns" />
       </div>
     </div>
+    <div class="modal-wrapper">
+        <div class="paper-box">
+            <div class="paper-box_head">
+                <h3 class="cb-sub-title">Calculation Results</h3>
+            </div>
+            <div class="paper-box_content">
+                <div class="model-content">
+                    <div class="model-row">
+                        <span class="label">Total CB</span>
+                        <span class="value">1,194</span>
+                    </div>
+                    <div class="model-row">
+                        <span class="label">Total QV</span>
+                        <span class="value">1,194</span>
+                    </div>
+                    <div class="model-row">
+                        <span class="label">Total CV</span>
+                        <span class="value">1,194</span>
+                    </div>
+                    <div class="model-row">
+                        <span class="label">Total Amount</span>
+                        <span class="value">1,194</span>
+                    </div>
+                    <div class="model-row">
+                        <span class="label">Total CB Fees</span>
+                        <span class="value">1,194</span>
+                    </div>
+                    <div class="btn-group">
+                        <button class="cb-btn bg-blue">Export</button>
+                        <button class="cb-btn bg-blue">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
   </div>
 </template>
 
@@ -209,5 +244,86 @@ export default {
       margin-bottom: 0;
     }
   }
+}
+.chart-row {
+  .cb-filter-group {
+    .date-time-picker {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      height: 100%;
+      width: 100%;
+      left: 0;
+      > div {
+        &:first-child {
+          opacity: 0;
+          height: 100%;
+        }
+      }
+    }
+  }
+}
+.modal-wrapper {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 9999;
+    .paper-box {
+        max-width: 600px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        @media screen and (max-width: 639px) {
+            left: 20px;
+            right: 20px;
+            transform: translate(0, -50%);
+            width: calc(100% - 40px)
+        }
+        &_head {
+            border-color: lightblue;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+        &_content {
+            padding: 40px;
+            .model-content {
+                max-width: 400px;
+                margin: 0 auto;
+            }
+        }
+        .model-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            span {
+                font-size: 28px;
+                font-weight: bold;
+                color: $primaryText;
+                padding: 8px 0;
+                @media screen and (max-width: 767px) {
+                    font-size: 20px;
+                }
+            }
+        }
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+            .cb-btn {
+                height: 50px;
+                margin: 0 10px;
+                @media screen and (max-width: 767px) {
+                    height: 36px;
+                }
+            }
+        }
+    }
 }
 </style>
