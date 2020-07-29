@@ -27,7 +27,7 @@
                   </ul>
                 </div>
 
-                <div class="cb-filter">
+                <div class="cb-filter data-picker">
                   <VueCtkDateTimePicker
                     buttonColor="#0892d0"
                     color="#1b2134"
@@ -248,7 +248,7 @@ export default {
 .chart-row {
   .cb-filter-group {
     .date-time-picker {
-      position: absolute;
+      position: absolute !important;
       top: 0;
       bottom: 0;
       height: 100%;
@@ -260,6 +260,9 @@ export default {
           height: 100%;
         }
       }
+    }
+    .cb-filter {
+      position: relative;
     }
   }
 }
