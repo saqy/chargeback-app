@@ -1,88 +1,91 @@
 <template>
   <div id="app">
     <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-    <sidebar/>
+    <sidebar />
     <div class="main-content">
       <div class="main-container">
-      <stats-card/>
-          <div class="cb-row chart-row">
-              <div class="paper-box">
-                  <div class="paper-box_head">
-                      <h3 class="cb-sub-title">Chargeback Overview</h3>
+        <stats-card />
+        <div class="cb-row chart-row">
+          <div class="paper-box">
+            <div class="paper-box_head">
+              <h3 class="cb-sub-title">Chargeback Overview</h3>
+            </div>
+            <div class="paper-box_content">
+              <div class="cb-filter-group">
+                <div class="cb-filter">
+                  <div class="cb-filter_btn no-border">
+                    <span class="cb-filter_text">Month</span>
+                    <span class="arrow-icon"></span>
                   </div>
-                  <div class="paper-box_content">
-                      <div class="cb-filter-group">
-                          <div class="cb-filter">
-                              <div class="cb-filter_btn no-border">
-                                  <span class="cb-filter_text">Month</span>
-                                  <span class="arrow-icon">
-                                  </span>
-                              </div>
-                              <ul class="cb-filter_list">
-                                  <li class="cb-filter_item">Item</li>   
-                                  <li class="cb-filter_item">Item</li>   
-                                  <li class="cb-filter_item">Item</li>   
-                                  <li class="cb-filter_item">Item</li>   
-                                  <li class="cb-filter_item">Item</li>   
-                                  <li class="cb-filter_item">Item</li>   
-                              </ul>
-                          </div>
-                          <div class="cb-filter">
-                              <div class="cb-filter_btn">
-                                  <span class="cb-filter_text">Range</span>
-                                  <span class="arrow-icon">
-                                  </span>
-                              </div>
-                              <ul class="cb-filter_list">
-                                  <li class="cb-filter_item">Item</li>   
-                                  <li class="cb-filter_item">Item</li>   
-                                  <li class="cb-filter_item">Item</li>   
-                                  <li class="cb-filter_item">Item</li>   
-                                  <li class="cb-filter_item">Item</li>   
-                                  <li class="cb-filter_item">Item</li>   
-                              </ul>
-                          </div>
-                          <div class="cb-filter">
-                              <div class="cb-filter_btn bg-blue">
-                                  <span class="cb-filter_text">Last</span>
-                                  <span class="arrow-icon white">
-                                  </span>
-                              </div>
-                              <ul class="cb-filter_list">
-                                  <li class="cb-filter_item">Item</li>   
-                                  <li class="cb-filter_item">Item</li>   
-                                  <li class="cb-filter_item">Item</li>   
-                                  <li class="cb-filter_item">Item</li>   
-                                  <li class="cb-filter_item">Item</li>   
-                                  <li class="cb-filter_item">Item</li>   
-                              </ul>
-                          </div>
-                          <div class="cb-filter">
-                              <div class="cb-filter_btn bg-blue">
-                                  <span class="cb-filter_text">Current</span>
-                                  <span class="arrow-icon white">
-                                  </span>
-                              </div>
-                              <ul class="cb-filter_list">
-                                  <li class="cb-filter_item">Item</li>   
-                                  <li class="cb-filter_item">Item</li>   
-                                  <li class="cb-filter_item">Item</li>   
-                                  <li class="cb-filter_item">Item</li>   
-                                  <li class="cb-filter_item">Item</li>   
-                                  <li class="cb-filter_item">Item</li>   
-                              </ul>
-                          </div>
+                  <ul class="cb-filter_list">
+                    <li class="cb-filter_item">Item</li>
+                    <li class="cb-filter_item">Item</li>
+                    <li class="cb-filter_item">Item</li>
+                    <li class="cb-filter_item">Item</li>
+                    <li class="cb-filter_item">Item</li>
+                    <li class="cb-filter_item">Item</li>
+                  </ul>
+                </div>
 
-                          <button class="cb-btn">
-                              Today
-                          </button>
-                      </div>
-                      <overview />
+                <div class="cb-filter">
+                  <VueCtkDateTimePicker
+                   
+                    id="RangeDatePicker"
+                    range
+                    v-model="dateRangeValue"
+                    @validate="applyFilter($event)"
+                  />
+                  <div class="cb-filter_btn">
+                    <span class="cb-filter_text">Range</span>
+
+                    <span class="arrow-icon"></span>
                   </div>
+                  <!-- <ul class="cb-filter_list">
+                                  <li class="cb-filter_item">Item</li>   
+                                  <li class="cb-filter_item">Item</li>   
+                                  <li class="cb-filter_item">Item</li>   
+                                  <li class="cb-filter_item">Item</li>   
+                                  <li class="cb-filter_item">Item</li>   
+                                  <li class="cb-filter_item">Item</li>   
+                  </ul> -->
+                </div>
+                <div class="cb-filter">
+                  <div class="cb-filter_btn bg-blue">
+                    <span class="cb-filter_text">Last</span>
+                    <span class="arrow-icon white"></span>
+                  </div>
+                  <ul class="cb-filter_list">
+                    <li class="cb-filter_item">Item</li>
+                    <li class="cb-filter_item">Item</li>
+                    <li class="cb-filter_item">Item</li>
+                    <li class="cb-filter_item">Item</li>
+                    <li class="cb-filter_item">Item</li>
+                    <li class="cb-filter_item">Item</li>
+                  </ul>
+                </div>
+                <div class="cb-filter">
+                  <div class="cb-filter_btn bg-blue">
+                    <span class="cb-filter_text">Current</span>
+                    <span class="arrow-icon white"></span>
+                  </div>
+                  <ul class="cb-filter_list">
+                    <li class="cb-filter_item">Item</li>
+                    <li class="cb-filter_item">Item</li>
+                    <li class="cb-filter_item">Item</li>
+                    <li class="cb-filter_item">Item</li>
+                    <li class="cb-filter_item">Item</li>
+                    <li class="cb-filter_item">Item</li>
+                  </ul>
+                </div>
+
+                <button class="cb-btn">Today</button>
               </div>
+              <overview />
+            </div>
           </div>
-          <merchant-health />
-          <cb-summary :cbData="cbData" :columns="columns" />
+        </div>
+        <merchant-health />
+        <cb-summary :cbData="filteredData" :columns="columns" />
       </div>
     </div>
   </div>
@@ -94,12 +97,16 @@ import Overview from "./Overview";
 import MerchantHealth from "./MerchantHealth";
 import StatsCard from "./StatsCard";
 import Sidebar from "./Sidebar";
+import VueCtkDateTimePicker from "vue-ctk-date-time-picker";
+import "vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css";
 export default {
   name: "ChargebackContainer",
   data: () => {
     return {
       cbData: [],
-      columns: []
+      filteredData: [],
+      columns: [],
+      dateRangeValue: null
     };
   },
   components: {
@@ -107,10 +114,11 @@ export default {
     Overview,
     MerchantHealth,
     StatsCard,
-    Sidebar
+    Sidebar,
+    VueCtkDateTimePicker
   },
 
-  created: function() {
+  mounted: function (){
     fetch("data.csv", { mode: "no-cors" })
       .then(response => response.text())
       .then(text => {
@@ -118,9 +126,10 @@ export default {
         // console.log(parsedData);
 
         this.cbData = JSON.parse(parsedData);
+        this.filteredData = JSON.parse(parsedData);
         this.columns = this.getColomnNames(this.cbData);
         // console.log(parsedData)
-      });
+      });   
   },
   methods: {
     csvJSON: function(csv) {
@@ -129,7 +138,7 @@ export default {
       let headers = lines[0].split(",");
       for (var i = 1; i < lines.length; i++) {
         let obj = {};
-        let currentline = lines[i].split(/,(?=(?:[^"]*"[^"]*")*(?![^"]*"))/)
+        let currentline = lines[i].split(/,(?=(?:[^"]*"[^"]*")*(?![^"]*"))/);
         for (let j = 0; j < headers.length; j++) {
           obj[headers[j]] = currentline[j].replace(/"/g, "");
         }
@@ -143,11 +152,27 @@ export default {
         const obj = {
           title: k,
           name: k,
-          sortField: k,
+          sortField: k
         };
         return obj;
       });
       return columns;
+    },
+    // eslint-disable-next-line no-unused-vars
+    applyFilter: function(e) {
+      console.log("here..");
+      console.log(this.dateRangeValue); 
+      const startDate = new Date(this.dateRangeValue.start);
+      const endDate = new Date(this.dateRangeValue.end);
+      const dataToFilter=this.cbData;
+      const result = dataToFilter.filter(d => {
+          console.log('d')
+          console.log(d)
+        const time = new Date(d.cb_date);
+        return startDate < time && time < endDate;
+      });
+   
+     this.filteredData = [...result];
     }
   }
 };
@@ -157,31 +182,31 @@ export default {
 @import "../assets/variable.scss";
 @import "../assets/global.scss";
 .main-content {
-    flex: 1;
-    background-color: $gray;
-    width: calc(100% - 340px);
-    margin-left: 340px;
-    @media screen and (max-width: 1900px) {
-        width: calc(100% - 300px);
-        margin-left: 300px;
-    }
-    @media screen and (max-width: 1599px) {
-        width: calc(100% - 280px);
-        margin-left: 280px;
-    }
-    @media screen and (max-width: 1279px) {
-        width: 100%;
-        margin-left: 0;
-    }
+  flex: 1;
+  background-color: $gray;
+  width: calc(100% - 340px);
+  margin-left: 340px;
+  @media screen and (max-width: 1900px) {
+    width: calc(100% - 300px);
+    margin-left: 300px;
+  }
+  @media screen and (max-width: 1599px) {
+    width: calc(100% - 280px);
+    margin-left: 280px;
+  }
+  @media screen and (max-width: 1279px) {
+    width: 100%;
+    margin-left: 0;
+  }
 }
 .merchant-row {
-    .paper-box_head {
-        padding-left: 30px;
-        padding-right: 30px;
-        border-color: #e1e7f0;
-        .cb-sub-title {
-            margin-bottom: 0;
-        }
+  .paper-box_head {
+    padding-left: 30px;
+    padding-right: 30px;
+    border-color: #e1e7f0;
+    .cb-sub-title {
+      margin-bottom: 0;
     }
+  }
 }
 </style>
