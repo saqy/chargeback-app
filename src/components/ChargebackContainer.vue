@@ -79,7 +79,7 @@
                   </ul>
                 </div>
 
-                <button class="cb-btn">Today</button>
+                <button class="cb-btn" @click="applyFilter()">Today</button>
               </div>
               <overview />
             </div>
