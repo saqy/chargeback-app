@@ -29,7 +29,8 @@
 
                 <div class="cb-filter">
                   <VueCtkDateTimePicker
-                   
+                    buttonColor="#0892d0"
+                    color="#1b2134"
                     id="RangeDatePicker"
                     range
                     v-model="dateRangeValue"
