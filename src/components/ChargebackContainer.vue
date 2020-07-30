@@ -4,12 +4,12 @@
     <sidebar />
     <div class="main-content">
       <div class="main-container">
-        <stats-card title="Total Seles" value="$56,158,914" />
-        <stats-card title="Total Trxns" value="$36,158,914" />
-        <stats-card title="Total Chgbks" value="1,914" />
-        <stats-card title="% CB to Sales" value="2%" color="red"/>
-        <stats-card title="% CB to Trxns" value=".12%" color="red"/>
-        <stats-card title="Total CB Fees" value="$56,158,914" color="red"/>
+        <stats-card title="Total Seles" :value="totasales" />
+        <stats-card title="Total Trxns" :value="totalTrans" />
+        <stats-card title="Total Chgbks" :value="totalCbs" />
+        <stats-card title="% CB to Sales" value="2%" color="red" />
+        <stats-card title="% CB to Trxns" value=".12%" color="red" />
+        <stats-card title="Total CB Fees" value="$56,158,914" color="red" />
         <div class="cb-row chart-row">
           <div class="paper-box">
             <div class="paper-box_head">
@@ -78,7 +78,7 @@
 
                 <button class="cb-btn" @click="applyFilter()">Today</button>
               </div>
-              <overview :cbData="filteredData"  />
+              <overview :cbData="filteredData" />
             </div>
           </div>
         </div>
@@ -87,39 +87,39 @@
       </div>
     </div>
     <div class="modal-wrapper">
-        <div class="paper-box">
-            <div class="paper-box_head">
-                <h3 class="cb-sub-title">Calculation Results</h3>
-            </div>
-            <div class="paper-box_content">
-                <div class="model-content">
-                    <div class="model-row">
-                        <span class="label">Total CB</span>
-                        <span class="value">1,194</span>
-                    </div>
-                    <div class="model-row">
-                        <span class="label">Total QV</span>
-                        <span class="value">1,194</span>
-                    </div>
-                    <div class="model-row">
-                        <span class="label">Total CV</span>
-                        <span class="value">1,194</span>
-                    </div>
-                    <div class="model-row">
-                        <span class="label">Total Amount</span>
-                        <span class="value">1,194</span>
-                    </div>
-                    <div class="model-row">
-                        <span class="label">Total CB Fees</span>
-                        <span class="value">1,194</span>
-                    </div>
-                    <div class="btn-group">
-                        <button class="cb-btn bg-blue">Export</button>
-                        <button class="cb-btn bg-blue">Close</button>
-                    </div>
-                </div>
-            </div>
+      <div class="paper-box">
+        <div class="paper-box_head">
+          <h3 class="cb-sub-title">Calculation Results</h3>
         </div>
+        <div class="paper-box_content">
+          <div class="model-content">
+            <div class="model-row">
+              <span class="label">Total CB</span>
+              <span class="value">1,194</span>
+            </div>
+            <div class="model-row">
+              <span class="label">Total QV</span>
+              <span class="value">1,194</span>
+            </div>
+            <div class="model-row">
+              <span class="label">Total CV</span>
+              <span class="value">1,194</span>
+            </div>
+            <div class="model-row">
+              <span class="label">Total Amount</span>
+              <span class="value">1,194</span>
+            </div>
+            <div class="model-row">
+              <span class="label">Total CB Fees</span>
+              <span class="value">1,194</span>
+            </div>
+            <div class="btn-group">
+              <button class="cb-btn bg-blue">Export</button>
+              <button class="cb-btn bg-blue">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -151,18 +151,33 @@ export default {
     VueCtkDateTimePicker
   },
 
-  mounted: function (){
+  mounted: function() {
     fetch("data.csv", { mode: "no-cors" })
       .then(response => response.text())
       .then(text => {
         const parsedData = this.csvJSON(text);
-        // console.log(parsedData);
-
         this.cbData = JSON.parse(parsedData);
         this.filteredData = JSON.parse(parsedData);
         this.columns = this.getColomnNames(this.cbData);
-        // console.log(parsedData)
-      });   
+      });
+  },
+  computed: {
+    totasales: function() {
+      const sales = this.cbData.reduce((prev, cur) => {
+        return (parseFloat(prev) + parseFloat(cur.cb_amt)).toFixed(2);
+      }, 0);
+      return `$${sales}`;
+    },
+    totalTrans: function() {
+      const trans = this.cbData.reduce((prev, cur) => {
+        return (parseFloat(prev) + parseFloat(cur.tran_amt)).toFixed(2);
+      }, 0);
+      return `$${trans}`;
+    },
+    totalCbs: function() {
+      const cash = this.cbData.length
+      return `$${cash}`;
+    }
   },
   methods: {
     csvJSON: function(csv) {
@@ -194,18 +209,18 @@ export default {
     // eslint-disable-next-line no-unused-vars
     applyFilter: function(e) {
       console.log("here..");
-      console.log(this.dateRangeValue); 
+      console.log(this.dateRangeValue);
       const startDate = new Date(this.dateRangeValue.start);
       const endDate = new Date(this.dateRangeValue.end);
-      const dataToFilter=this.cbData;
+      const dataToFilter = this.cbData;
       const result = dataToFilter.filter(d => {
-          console.log('d')
-          console.log(d)
+        console.log("d");
+        console.log(d);
         const time = new Date(d.cb_date);
         return startDate < time && time < endDate;
       });
-   
-     this.filteredData = [...result];
+
+      this.filteredData = [...result];
     }
   }
 };
@@ -265,66 +280,66 @@ export default {
   }
 }
 .modal-wrapper {
-    display: none;
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    top: 0;
-    background-color: rgba(0, 0, 0, 0.3);
-    z-index: 9999;
-    .paper-box {
-        max-width: 600px;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        @media screen and (max-width: 639px) {
-            left: 20px;
-            right: 20px;
-            transform: translate(0, -50%);
-            width: calc(100% - 40px)
-        }
-        &_head {
-            border-color: lightblue;
-            padding-left: 20px;
-            padding-right: 20px;
-        }
-        &_content {
-            padding: 40px;
-            .model-content {
-                max-width: 400px;
-                margin: 0 auto;
-            }
-        }
-        .model-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            span {
-                font-size: 28px;
-                font-weight: bold;
-                color: $primaryText;
-                padding: 8px 0;
-                @media screen and (max-width: 767px) {
-                    font-size: 20px;
-                }
-            }
-        }
-        .btn-group {
-            display: flex;
-            justify-content: center;
-            margin-top: 40px;
-            .cb-btn {
-                height: 50px;
-                margin: 0 10px;
-                @media screen and (max-width: 767px) {
-                    height: 36px;
-                }
-            }
-        }
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+  .paper-box {
+    max-width: 600px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    @media screen and (max-width: 639px) {
+      left: 20px;
+      right: 20px;
+      transform: translate(0, -50%);
+      width: calc(100% - 40px);
     }
+    &_head {
+      border-color: lightblue;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+    &_content {
+      padding: 40px;
+      .model-content {
+        max-width: 400px;
+        margin: 0 auto;
+      }
+    }
+    .model-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      span {
+        font-size: 28px;
+        font-weight: bold;
+        color: $primaryText;
+        padding: 8px 0;
+        @media screen and (max-width: 767px) {
+          font-size: 20px;
+        }
+      }
+    }
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      margin-top: 40px;
+      .cb-btn {
+        height: 50px;
+        margin: 0 10px;
+        @media screen and (max-width: 767px) {
+          height: 36px;
+        }
+      }
+    }
+  }
 }
 </style>
