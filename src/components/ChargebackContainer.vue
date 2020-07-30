@@ -21,7 +21,7 @@
               <div class="cb-filter-group">
                 <div class="cb-filter">
                   <div class="cb-filter_btn no-border">
-                    <span class="cb-filter_text" @click="monthHanler()">{{selectedMonth}}</span>
+                    <span class="cb-filter_text" @click="monthHandler()">{{selectedMonth}}</span>
                     <span class="arrow-icon"></span>
                   </div>
                   <ul class="cb-filter_list" v-if="showMonths">
@@ -188,7 +188,7 @@ export default {
 
       this.filteredData = [...result];
     },
-    monthHanler: function() {
+    monthHandler: function() {
       this.showMonths = !this.showMonths;
     },
     selectMonth: function(m) {

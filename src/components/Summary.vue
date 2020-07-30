@@ -30,7 +30,7 @@
 
           <div class="cb-filter">
             <div class="cb-filter_btn bg-gray">
-              <span class="cb-filter_text" @click="actionHanler()">{{selectedAction}}</span>
+              <span class="cb-filter_text" @click="actionHandler()">{{selectedAction}}</span>
               <span class="arrow-icon"></span>
             </div>
             <ul class="cb-filter_list" v-if="showActions">
@@ -194,7 +194,7 @@ export default {
     };
   },
   methods: {
-    actionHanler: function() {
+    actionHandler: function() {
       this.showActions = !this.showActions;
     },
     selectAction: function(m) {
