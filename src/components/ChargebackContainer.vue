@@ -4,12 +4,14 @@
     <sidebar />
     <div class="main-content">
       <div class="main-container">
-        <stats-card title="Total Seles" :value="totasales" />
-        <stats-card title="Total Trxns" :value="totalTrans" />
-        <stats-card title="Total Chgbks" :value="totalCbs" />
-        <stats-card title="% CB to Sales" value="2%" color="red" />
-        <stats-card title="% CB to Trxns" value=".12%" color="red" />
-        <stats-card title="Total CB Fees" value="$56,158,914" color="red" />
+        <div class="cb-row account-row">
+          <stats-card class="cb-col-3" title="Total Seles" :value="totasales" />
+          <stats-card class="cb-col-3" title="Total Trxns" :value="totalTrans" />
+          <stats-card class="cb-col-4" title="Total Chgbks" :value="totalCbs" />
+          <stats-card class="cb-col-4" title="% CB to Sales" value="2%" color="red"/>
+          <stats-card class="cb-col-4" title="% CB to Trxns" value=".12%" color="red"/>
+          <stats-card class="cb-col-3" title="Total CB Fees" value="$56,158,914" color="red"/>
+        </div>
         <div class="cb-row chart-row">
           <div class="paper-box">
             <div class="paper-box_head">
