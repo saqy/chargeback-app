@@ -1,13 +1,11 @@
 <template>
-   <div class="cb-row account-row">
-        <div class="cb-col-3">
-            <div class="paper-box">
-                <div class="paper-box_head">
-                    <h3 class="cb-sub-title">{{title}}</h3>
-                </div>
-                <div class="paper-box_content">
-                    <span class="text-blue" :style="{'color': color + '!important'}">{{value}}</span>
-                </div>
+    <div :class="{classes}">
+        <div class="paper-box">
+            <div class="paper-box_head">
+                <h3 class="cb-sub-title">{{title}}</h3>
+            </div>
+            <div class="paper-box_content">
+                <span class="text-blue" :style="{'color': color + '!important'}">{{value}}</span>
             </div>
         </div>
     </div>
@@ -33,6 +31,9 @@ export default {
       required: true
     }, 
     color: {
+      type: String,
+    },
+    classes: {
       type: String,
     }
   },
