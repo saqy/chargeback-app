@@ -175,7 +175,7 @@ export default {
   data() {
     return {
       data: [],
-      perPage: 2,
+      perPage: 10,
       selectedCategory: "",
       sortOrder: [
         {
