@@ -160,8 +160,6 @@ export default {
   },
   watch: {
     cbData: function(newVal) {
-      console.log("newVal");
-      console.log(newVal);
       this.data = newVal;
       this.$refs.vuetable.refresh();
     },
@@ -208,7 +206,6 @@ export default {
       this.$refs.pagination.setPaginationData(paginationData);
     },
     onChangePage(page) {
-      console.log(this.perPage);
       this.$refs.vuetable.changePage(page);
     },
     dataManager(sortOrder, pagination) {
@@ -220,8 +217,6 @@ export default {
           data: []
         };
       }
-      console.log("here");
-      console.log("dataManager");
       let local = this.data;
 
       // sortOrder can be empty, so we have to check for that as well
@@ -238,16 +233,10 @@ export default {
         local.length,
         this.perPage
       );
-      console.log("pagination:", pagination);
       let from = parseInt(pagination.from) - 1;
       let to = parseInt(from) + parseInt(this.perPage);
       let total = local.length;
       this.paginationInfo= {from, to, total }
-
-      console.log("_.slice(local, from, to)...");
-      console.log(from);
-      console.log(to);
-      console.log(_.slice(local, from, to));
       return {
         pagination: pagination,
         data: _.slice(local, from, to)

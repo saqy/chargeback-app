@@ -71,7 +71,6 @@ export default {
   },
   watch: {
     cbData: function(newVal) {
-        console.log('daata is adsad 3e');
       this.data = newVal;
     }
   },

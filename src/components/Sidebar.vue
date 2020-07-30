@@ -152,7 +152,6 @@ export default {
   },
   methods: {
       toggleSideBar: function(){
-          console.log('sidebar is clicked');
           this.showSideBar= !this.showSideBar;
       }
 

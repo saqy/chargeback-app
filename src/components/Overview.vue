@@ -30,7 +30,6 @@ export default {
   },
   watch: {
     cbData: function(newVal) {
-      console.log("daata is adsad");
       this.data = newVal;
       this.populateGraph(this.data);
     }
@@ -42,13 +41,10 @@ export default {
   },
   methods: {
     populateGraph: function(data) {
-      console.log("nhe 1");
-
       let salesDataPoints = [];
       [...Array(12).keys()].forEach((d, idx) => {
-        console.log("nhe");
         salesDataPoints.push({
-          x: new Date(`2020, ${idx }`),
+          x: new Date(`${new Date().getFullYear()}, ${idx }`),
           y: parseFloat(
             data
               .filter(dt => new Date(dt.cb_date).getMonth() === idx + 1)
@@ -63,7 +59,7 @@ export default {
       let cashbackDataPoints = [];
       [...Array(12).keys()].forEach((d, idx) => {
         cashbackDataPoints.push({
-          x: new Date(`2020, ${idx }`),
+          x: new Date(`${new Date().getFullYear()}, ${idx }`),
           y: 100 * parseFloat(
             data
               .filter(dt => new Date(dt.tran_date).getMonth() === idx + 1)
@@ -122,9 +118,6 @@ export default {
           }
         ]
       };
-
-      console.log('options.data.dataPoints');
-      console.log(options.data[0].dataPoints);
        window.$("#chartContainer").CanvasJSChart(options);
     }
   }
