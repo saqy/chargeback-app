@@ -84,7 +84,6 @@ import StatsCard from "./StatsCard";
 import Sidebar from "./Sidebar";
 import VueCtkDateTimePicker from "vue-ctk-date-time-picker";
 import "vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css";
-// import VuetableFieldCheckbox from "vuetable-2/src/components/VuetableFieldCheckbox.vue";
 export default {
   name: "ChargebackContainer",
   data: () => {

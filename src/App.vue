@@ -9,7 +9,6 @@ import ChargebackContainer from "./components/ChargebackContainer";
 export default {
   name: "App",
   components: {
-    // HelloWorld,
     ChargebackContainer,
   },
   methods: {
