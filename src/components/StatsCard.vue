@@ -3,60 +3,10 @@
         <div class="cb-col-3">
             <div class="paper-box">
                 <div class="paper-box_head">
-                    <h3 class="cb-sub-title">Total Seles</h3>
+                    <h3 class="cb-sub-title">{{title}}</h3>
                 </div>
                 <div class="paper-box_content">
-                    <span class="text-blue">$56,158,914</span>
-                </div>
-            </div>
-        </div>
-        <div class="cb-col-3">
-            <div class="paper-box">
-                <div class="paper-box_head">
-                    <h3 class="cb-sub-title">Total Trxns</h3>
-                </div>
-                <div class="paper-box_content">
-                    <span class="text-blue">36,158,914</span>
-                </div>
-            </div>
-        </div>
-        <div class="cb-col-4">
-            <div class="paper-box">
-                <div class="paper-box_head">
-                    <h3 class="cb-sub-title">Total Chgbks</h3>
-                </div>
-                <div class="paper-box_content">
-                    <span class="text-blue">1,914</span>
-                </div>
-            </div>
-        </div>
-        <div class="cb-col-4">
-            <div class="paper-box">
-                <div class="paper-box_head">
-                    <h3 class="cb-sub-title">% CB to Sales</h3>
-                </div>
-                <div class="paper-box_content">
-                    <span class="text-red">2%</span>
-                </div>
-            </div>
-        </div>
-        <div class="cb-col-4">
-            <div class="paper-box">
-                <div class="paper-box_head">
-                    <h3 class="cb-sub-title">% CB to Trxns</h3>
-                </div>
-                <div class="paper-box_content">
-                    <span class="text-red">.12%</span>
-                </div>
-            </div>
-        </div>
-        <div class="cb-col-3">
-            <div class="paper-box">
-                <div class="paper-box_head">
-                    <h3 class="cb-sub-title">Total CB Fees</h3>
-                </div>
-                <div class="paper-box_content">
-                    <span class="text-red">$56,158,914</span>
+                    <span class="text-blue" :style="{'color': color + '!important'}">{{value}}</span>
                 </div>
             </div>
         </div>
@@ -74,13 +24,16 @@ export default {
   },
 
   props: {
-    cbData: {
-      type: Array,
+    title: {
+      type: String,
       required: true
     },
-    columns: {
-      type: Array,
+    value: {
+      type: String,
       required: true
+    }, 
+    color: {
+      type: String,
     }
   },
   watch: {

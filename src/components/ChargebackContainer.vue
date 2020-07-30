@@ -4,7 +4,12 @@
     <sidebar />
     <div class="main-content">
       <div class="main-container">
-        <stats-card />
+        <stats-card title="Total Seles" value="$56,158,914" />
+        <stats-card title="Total Trxns" value="$36,158,914" />
+        <stats-card title="Total Chgbks" value="1,914" />
+        <stats-card title="% CB to Sales" value="2%" color="red"/>
+        <stats-card title="% CB to Trxns" value=".12%" color="red"/>
+        <stats-card title="Total CB Fees" value="$56,158,914" color="red"/>
         <div class="cb-row chart-row">
           <div class="paper-box">
             <div class="paper-box_head">
@@ -73,11 +78,11 @@
 
                 <button class="cb-btn" @click="applyFilter()">Today</button>
               </div>
-              <overview />
+              <overview :cbData="filteredData"  />
             </div>
           </div>
         </div>
-        <merchant-health />
+        <merchant-health :cbData="filteredData" />
         <cb-summary :cbData="filteredData" :columns="columns" />
       </div>
     </div>
@@ -209,6 +214,7 @@ export default {
 <style lang="scss">
 @import "../assets/variable.scss";
 @import "../assets/global.scss";
+
 .main-content {
   flex: 1;
   background-color: $gray;

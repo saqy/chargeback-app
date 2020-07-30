@@ -26,38 +26,71 @@ export default {
     cbData: {
       type: Array,
       required: true
-    },
-    columns: {
-      type: Array,
-      required: true
     }
   },
-  watch: {},
+  watch: {
+    cbData: function(newVal) {
+      console.log("daata is adsad");
+      this.data = newVal;
+      this.populateGraph(this.data);
+    }
+  },
   data() {
     return {
       data: []
     };
   },
-  mounted: function() {
-    window.onload = function() {
+  methods: {
+    populateGraph: function(data) {
+      console.log("nhe 1");
+
+      let salesDataPoints = [];
+      [...Array(12).keys()].forEach((d, idx) => {
+        console.log("nhe");
+        salesDataPoints.push({
+          x: new Date(`2020, ${idx }`),
+          y: parseFloat(
+            data
+              .filter(dt => new Date(dt.cb_date).getMonth() === idx + 1)
+              .reduce((prev, next) => {
+                return (prev += parseFloat(next.cb_amt));
+              }, 0)
+              .toFixed(2)
+          ),
+          indexLabel: d.cb_amt
+        });
+      });
+      let cashbackDataPoints = [];
+      [...Array(12).keys()].forEach((d, idx) => {
+        cashbackDataPoints.push({
+          x: new Date(`2020, ${idx }`),
+          y: 100 * parseFloat(
+            data
+              .filter(dt => new Date(dt.tran_date).getMonth() === idx + 1)
+              .reduce((prev, next) => {
+                return parseFloat((prev += next.tran_amt));
+              }, 0)
+              .toFixed(2)
+          ),
+          indexLabel: d.tran_amt
+        });
+      });
       var options = {
         animationEnabled: true,
         backgroundColor: "#f2f6fc",
         theme: "light2",
         axisX: {
-          valueFormatString: "MMM"
+          valueFormatString: "MMM",
+          
         },
         axisY: {
           gridThickness: 0,
-          prefix: "$",
-          titleFontSize: 10,
-          labelFontSize: 10,
+          prefix: "",
+          titleFontSize: 0,
+          labelFontSize: 0
         },
         toolTip: {
-          shared: true,
-          cornerRadius: 8,
-          backgroundColor: "#515974",
-          fontColor: "#ffffff",
+          enabled: true
         },
         legend: {
           cursor: "pointer"
@@ -73,20 +106,7 @@ export default {
             color: "#0892d0",
             markerColor: "#515974",
             markerSize: 10,
-            dataPoints: [
-              { x: new Date(2017, 0), y: 4000 },
-              { x: new Date(2017, 1), y: 7000 },
-              { x: new Date(2017, 2), y: 12000 },
-              { x: new Date(2017, 3), y: 40000 },
-              { x: new Date(2017, 4), y: 20000 },
-              { x: new Date(2017, 5), y: 35000 },
-              { x: new Date(2017, 6), y: 33000 },
-              { x: new Date(2017, 7), y: 20000 },
-              { x: new Date(2017, 8), y: 25000 },
-              { x: new Date(2017, 9), y: 16000 },
-              { x: new Date(2017, 10), y: 29000 },
-              { x: new Date(2017, 11), y: 20000 }
-            ]
+            dataPoints: salesDataPoints
           },
           {
             type: "splineArea",
@@ -98,30 +118,16 @@ export default {
             color: "#ead401",
             markerColor: "#515974",
             markerSize: 10,
-            dataPoints: [
-              { x: new Date(2017, 0), y: 5000 },
-              { x: new Date(2017, 1), y: 7000 },
-              { x: new Date(2017, 2), y: 15000 },
-              { x: new Date(2017, 3), y: 4000 },
-              { x: new Date(2017, 4), y: 2000 },
-              { x: new Date(2017, 5), y: 37000 },
-              { x: new Date(2017, 6), y: 34000 },
-              { x: new Date(2017, 7), y: 21000 },
-              { x: new Date(2017, 8), y: 23000 },
-              { x: new Date(2017, 9), y: 17000 },
-              { x: new Date(2017, 10), y: 29000 },
-              { x: new Date(2017, 11), y: 21000 }
-            ]
+            dataPoints: cashbackDataPoints
           }
         ]
       };
-      console.log('window.$');
-      console.log(window.$);
-      window.$("#chartContainer").CanvasJSChart(options);
-    };
-  },
 
-  methods: {}
+      console.log('options.data.dataPoints');
+      console.log(options.data[0].dataPoints);
+       window.$("#chartContainer").CanvasJSChart(options);
+    }
+  }
 };
 </script>
 
@@ -190,16 +196,16 @@ export default {
           left: 52px;
         }
         @media screen and (max-width: 767px) {
-            left: auto;
-            right: 9px;
-            top: -4px;
+          left: auto;
+          right: 9px;
+          top: -4px;
         }
       }
       &_item {
         padding: 10px 0;
         display: flex;
         @media screen and (max-width: 767px) {
-            padding: 4px 0;
+          padding: 4px 0;
         }
         .text {
           font-size: 20px;
