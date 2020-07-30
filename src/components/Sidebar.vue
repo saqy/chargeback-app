@@ -5,7 +5,7 @@
       <span class="bar"></span>
       <span class="bar"></span>
     </div>
-    <div class="sidebar" :style="[ showSideBar ? {left: '0'}: {left: '-280px'}]">
+    <div :class='showSideBar ? "sidebar" : "sidebar mobile-sidebar"'>
       <div class="sidebar_btn-wrapper">
         <div class="sidebar_btn" @click="toggleSideBar()">
           <span class="bar"></span>
@@ -173,6 +173,11 @@ export default {
   height: 100%;
   overflow-y: auto;
   z-index: 999;
+  &.mobile-sidebar {
+    @media screen and (max-width: 1279px) {
+      left: 0 !important;
+    }
+  }
   &::-webkit-scrollbar-track {
     border-radius: 2;
     background-color: #1b2133;
