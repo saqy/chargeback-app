@@ -168,9 +168,7 @@ export default {
         this.$refs.vuetable.refresh();
       });
     }
-    // data: function() {
-    //   this.$refs.vuetable.refresh();
-    // }
+
   },
   data() {
     return {
