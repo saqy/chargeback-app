@@ -8,9 +8,9 @@
           <stats-card class="cb-col-3" title="Total Seles" :value="totasales" />
           <stats-card class="cb-col-3" title="Total Trxns" :value="totalTrans" />
           <stats-card class="cb-col-4" title="Total Chgbks" :value="totalCbs" />
-          <stats-card class="cb-col-4" title="% CB to Sales" value="2%" color="red"/>
-          <stats-card class="cb-col-4" title="% CB to Trxns" value=".12%" color="red"/>
-          <stats-card class="cb-col-3" title="Total CB Fees" value="$56,158,914" color="red"/>
+          <stats-card class="cb-col-4" title="% CB to Sales" value="2%" color="red" />
+          <stats-card class="cb-col-4" title="% CB to Trxns" value=".12%" color="red" />
+          <stats-card class="cb-col-3" title="Total CB Fees" value="$56,158,914" color="red" />
         </div>
         <div class="cb-row chart-row">
           <div class="paper-box">
@@ -21,16 +21,16 @@
               <div class="cb-filter-group">
                 <div class="cb-filter">
                   <div class="cb-filter_btn no-border">
-                    <span class="cb-filter_text">Month</span>
+                    <span class="cb-filter_text" @click="monthHanler()">{{selectedMonth}}</span>
                     <span class="arrow-icon"></span>
                   </div>
-                  <ul class="cb-filter_list">
-                    <li class="cb-filter_item">Item</li>
-                    <li class="cb-filter_item">Item</li>
-                    <li class="cb-filter_item">Item</li>
-                    <li class="cb-filter_item">Item</li>
-                    <li class="cb-filter_item">Item</li>
-                    <li class="cb-filter_item">Item</li>
+                  <ul class="cb-filter_list" v-if="showMonths">
+                    <li
+                      v-for="m in months"
+                      :key="m"
+                      class="cb-filter_item"
+                      @click="selectMonth(m)"
+                    >{{m}}</li>
                   </ul>
                 </div>
 
@@ -54,31 +54,15 @@
                     <span class="cb-filter_text">Last</span>
                     <span class="arrow-icon white"></span>
                   </div>
-                  <ul class="cb-filter_list">
-                    <li class="cb-filter_item">Item</li>
-                    <li class="cb-filter_item">Item</li>
-                    <li class="cb-filter_item">Item</li>
-                    <li class="cb-filter_item">Item</li>
-                    <li class="cb-filter_item">Item</li>
-                    <li class="cb-filter_item">Item</li>
-                  </ul>
                 </div>
                 <div class="cb-filter">
                   <div class="cb-filter_btn bg-blue">
                     <span class="cb-filter_text">Current</span>
                     <span class="arrow-icon white"></span>
                   </div>
-                  <ul class="cb-filter_list">
-                    <li class="cb-filter_item">Item</li>
-                    <li class="cb-filter_item">Item</li>
-                    <li class="cb-filter_item">Item</li>
-                    <li class="cb-filter_item">Item</li>
-                    <li class="cb-filter_item">Item</li>
-                    <li class="cb-filter_item">Item</li>
-                  </ul>
                 </div>
 
-                <button class="cb-btn" @click="applyFilter()">Today</button>
+                <button class="cb-btn" v-on:click="applyFilter()">Today</button>
               </div>
               <overview :cbData="filteredData" />
             </div>
@@ -88,41 +72,7 @@
         <cb-summary :cbData="filteredData" :columns="columns" />
       </div>
     </div>
-    <div class="modal-wrapper">
-      <div class="paper-box">
-        <div class="paper-box_head">
-          <h3 class="cb-sub-title">Calculation Results</h3>
-        </div>
-        <div class="paper-box_content">
-          <div class="model-content">
-            <div class="model-row">
-              <span class="label">Total CB</span>
-              <span class="value">1,194</span>
-            </div>
-            <div class="model-row">
-              <span class="label">Total QV</span>
-              <span class="value">1,194</span>
-            </div>
-            <div class="model-row">
-              <span class="label">Total CV</span>
-              <span class="value">1,194</span>
-            </div>
-            <div class="model-row">
-              <span class="label">Total Amount</span>
-              <span class="value">1,194</span>
-            </div>
-            <div class="model-row">
-              <span class="label">Total CB Fees</span>
-              <span class="value">1,194</span>
-            </div>
-            <div class="btn-group">
-              <button class="cb-btn bg-blue">Export</button>
-              <button class="cb-btn bg-blue">Close</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+  
   </div>
 </template>
 
@@ -134,6 +84,7 @@ import StatsCard from "./StatsCard";
 import Sidebar from "./Sidebar";
 import VueCtkDateTimePicker from "vue-ctk-date-time-picker";
 import "vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css";
+// import VuetableFieldCheckbox from "vuetable-2/src/components/VuetableFieldCheckbox.vue";
 export default {
   name: "ChargebackContainer",
   data: () => {
@@ -141,7 +92,23 @@ export default {
       cbData: [],
       filteredData: [],
       columns: [],
-      dateRangeValue: null
+      dateRangeValue: null,
+      months: [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      ],
+      showMonths: false,
+      selectedMonth: "Month"
     };
   },
   components: {
@@ -165,19 +132,19 @@ export default {
   },
   computed: {
     totasales: function() {
-      const sales = this.cbData.reduce((prev, cur) => {
+      const sales = this.filteredData.reduce((prev, cur) => {
         return (parseFloat(prev) + parseFloat(cur.cb_amt)).toFixed(2);
       }, 0);
       return `$${sales}`;
     },
     totalTrans: function() {
-      const trans = this.cbData.reduce((prev, cur) => {
+      const trans = this.filteredData.reduce((prev, cur) => {
         return (parseFloat(prev) + parseFloat(cur.tran_amt)).toFixed(2);
       }, 0);
       return `$${trans}`;
     },
     totalCbs: function() {
-      const cash = this.cbData.length
+      const cash = this.filteredData.length;
       return `$${cash}`;
     }
   },
@@ -206,23 +173,27 @@ export default {
         };
         return obj;
       });
+
       return columns;
     },
     // eslint-disable-next-line no-unused-vars
     applyFilter: function(e) {
-      console.log("here..");
-      console.log(this.dateRangeValue);
       const startDate = new Date(this.dateRangeValue.start);
       const endDate = new Date(this.dateRangeValue.end);
       const dataToFilter = this.cbData;
       const result = dataToFilter.filter(d => {
-        console.log("d");
-        console.log(d);
         const time = new Date(d.cb_date);
         return startDate < time && time < endDate;
       });
 
       this.filteredData = [...result];
+    },
+    monthHanler: function() {
+      this.showMonths = !this.showMonths;
+    },
+    selectMonth: function(m) {
+      this.selectedMonth = m;
+      this.showMonths = !this.showMonths;
     }
   }
 };
@@ -281,67 +252,5 @@ export default {
     }
   }
 }
-.modal-wrapper {
-  display: none;
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  top: 0;
-  background-color: rgba(0, 0, 0, 0.3);
-  z-index: 9999;
-  .paper-box {
-    max-width: 600px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    @media screen and (max-width: 639px) {
-      left: 20px;
-      right: 20px;
-      transform: translate(0, -50%);
-      width: calc(100% - 40px);
-    }
-    &_head {
-      border-color: lightblue;
-      padding-left: 20px;
-      padding-right: 20px;
-    }
-    &_content {
-      padding: 40px;
-      .model-content {
-        max-width: 400px;
-        margin: 0 auto;
-      }
-    }
-    .model-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      span {
-        font-size: 28px;
-        font-weight: bold;
-        color: $primaryText;
-        padding: 8px 0;
-        @media screen and (max-width: 767px) {
-          font-size: 20px;
-        }
-      }
-    }
-    .btn-group {
-      display: flex;
-      justify-content: center;
-      margin-top: 40px;
-      .cb-btn {
-        height: 50px;
-        margin: 0 10px;
-        @media screen and (max-width: 767px) {
-          height: 36px;
-        }
-      }
-    }
-  }
-}
+
 </style>

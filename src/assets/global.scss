@@ -216,14 +216,17 @@ button {
         width: 100%;
         top: 101%;
         z-index: 999;
-        display: none;
         left: 0;
     }
     &_item {
-        font-size: 18px;
+        font-size: 16px;
         padding: 8px 10px;
         list-style: none;
-        color: '#5c5e67';
+        color: #5c5e67;
+        &:hover{
+            background-color: #b6ddf1;
+            cursor: pointer;
+        }
     }
 }
 
@@ -244,7 +247,7 @@ button {
             margin-bottom: 0;
         }
     }
-    @media screen and (max-width: 767px) {
+    @media screen and (max-width: 1279px) {
         display: block;
     }
 }

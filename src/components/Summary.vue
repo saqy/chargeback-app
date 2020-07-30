@@ -1,15 +1,5 @@
 <template>
   <div id="app" class="ui container table-content-row">
-    <!-- <input v-model="perPage" type="number" />
-    <template>
-      <select v-model="selectedCategory">
-        <option
-          v-for="option in columns"
-          v-bind:value="option.name"
-          :key="option.name"
-        >{{ option.name }}</option>
-      </select>
-    </template>-->
     <div class="paper-box">
       <div class="paper-box_head">
         <h3 class="cb-sub-title">T1 Chargeback Summary for Sept. 1-31</h3>
@@ -40,33 +30,33 @@
 
           <div class="cb-filter">
             <div class="cb-filter_btn bg-gray">
-              <span class="cb-filter_text">Actions</span>
+              <span class="cb-filter_text" @click="actionHanler()">{{selectedAction}}</span>
               <span class="arrow-icon"></span>
             </div>
-            <ul class="cb-filter_list">
+            <ul class="cb-filter_list" v-if="showActions">
               <li
+                v-for="a in actions"
+                :key="a"
                 class="cb-filter_item"
-                v-for="option in columns"
-                v-bind:value="option.name"
-                :key="option.name"
-              >{{ option.name }}</li>
+                @click="selectAction(a)"
+              >{{a}}</li>
             </ul>
           </div>
-          <button class="cb-btn bg-blue">Submit</button>
+          <button class="cb-btn bg-blue" @click="toggleModal()">Submit</button>
 
           <div class="cb-filter ml-auto">
             <div class="cb-filter_btn bg-gray">
               <span class="cb-filter_text">Filter</span>
               <span class="arrow-icon"></span>
             </div>
-            <ul class="cb-filter_list">
+            <!-- <ul class="cb-filter_list">
               <li class="cb-filter_item">Item</li>
               <li class="cb-filter_item">Item</li>
               <li class="cb-filter_item">Item</li>
               <li class="cb-filter_item">Item</li>
               <li class="cb-filter_item">Item</li>
               <li class="cb-filter_item">Item</li>
-            </ul>
+            </ul>-->
           </div>
           <button class="cb-btn bg-blue">Export CSV</button>
         </div>
@@ -76,25 +66,11 @@
             :api-mode="false"
             :fields="columns"
             :per-page="perPage"
+            :sort-order="sortOrder"
             :data-manager="dataManager"
             pagination-path="pagination"
             @vuetable:pagination-data="onPaginationData"
-          >
-            <div slot="actions" slot-scope="props">
-              <button class="ui small button" @click="onActionClicked('view-item', props.rowData)">
-                <i class="zoom icon"></i>
-              </button>
-              <button class="ui small button" @click="onActionClicked('edit-item', props.rowData)">
-                <i class="edit icon"></i>
-              </button>
-              <button
-                class="ui small button"
-                @click="onActionClicked('delete-item', props.rowData)"
-              >
-                <i class="delete icon"></i>
-              </button>
-            </div>
-          </vuetable>
+          ></vuetable>
         </div>
         <div class="table-bottom-wrapper">
           <div class="cb-pagination">
@@ -103,19 +79,54 @@
           <div class="table-bottom-right-side">
             <div class="cb-filter">
               <div class="cb-filter_btn no-border">
-                <span class="cb-filter_text">10</span>
+                <span class="cb-filter_text">{{perPage}}</span>
                 <span class="arrow-icon"></span>
               </div>
-              <ul class="cb-filter_list">
+              <!-- <ul class="cb-filter_list">
                 <li class="cb-filter_item">Item</li>
                 <li class="cb-filter_item">Item</li>
                 <li class="cb-filter_item">Item</li>
                 <li class="cb-filter_item">Item</li>
                 <li class="cb-filter_item">Item</li>
                 <li class="cb-filter_item">Item</li>
-              </ul>
+              </ul>-->
             </div>
-            <span class="text">Displaying 1 - 10 of 100 records</span>
+            <span class="text">Displaying {{paginationInfo.from}} - {{paginationInfo.to}} of {{paginationInfo.total}} records</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-wrapper" v-if="showModal">
+      <div class="paper-box">
+        <div class="paper-box_head">
+          <h3 class="cb-sub-title">Calculation Results</h3>
+        </div>
+        <div class="paper-box_content">
+          <div class="model-content">
+            <div class="model-row">
+              <span class="label">Total CB</span>
+              <span class="value">1,194</span>
+            </div>
+            <div class="model-row">
+              <span class="label">Total QV</span>
+              <span class="value">1,194</span>
+            </div>
+            <div class="model-row">
+              <span class="label">Total CV</span>
+              <span class="value">1,194</span>
+            </div>
+            <div class="model-row">
+              <span class="label">Total Amount</span>
+              <span class="value">1,194</span>
+            </div>
+            <div class="model-row">
+              <span class="label">Total CB Fees</span>
+              <span class="value">1,194</span>
+            </div>
+            <div class="btn-group">
+              <button class="cb-btn bg-blue">Export</button>
+              <button class="cb-btn bg-blue" @click="toggleModal()">Close</button>
+            </div>
           </div>
         </div>
       </div>
@@ -149,10 +160,10 @@ export default {
   },
   watch: {
     cbData: function(newVal) {
-        console.log("newVal");
-        console.log(newVal);
-        this.data = newVal;
-        this.$refs.vuetable.refresh();
+      console.log("newVal");
+      console.log(newVal);
+      this.data = newVal;
+      this.$refs.vuetable.refresh();
     },
     perPage: function() {
       this.$nextTick(function() {
@@ -167,10 +178,32 @@ export default {
     return {
       data: [],
       perPage: 2,
-      selectedCategory: ""
+      selectedCategory: "",
+      sortOrder: [
+        {
+          field: "name",
+          sortField: "name",
+          direction: "asc"
+        }
+      ],
+      actions: ["Calculate Totals", "Mark Disputed", "Reverse volume"],
+      showActions: false,
+      selectedAction: "Actions",
+      showModal: false,
+      paginationInfo:{from: 0, to: 0, total:0}
     };
   },
   methods: {
+    actionHanler: function() {
+      this.showActions = !this.showActions;
+    },
+    selectAction: function(m) {
+      this.selectedAction = m;
+      this.showActions = !this.showActions;
+    },
+    toggleModal: function() {
+      this.showModal = !this.showModal;
+    },
     onPaginationData(paginationData) {
       this.$refs.pagination.setPaginationData(paginationData);
     },
@@ -206,23 +239,20 @@ export default {
         this.perPage
       );
       console.log("pagination:", pagination);
-      let from = pagination.from - 1;
-      let to = from + this.perPage;
+      let from = parseInt(pagination.from) - 1;
+      let to = parseInt(from) + parseInt(this.perPage);
+      let total = local.length;
+      this.paginationInfo= {from, to, total }
 
       console.log("_.slice(local, from, to)...");
+      console.log(from);
+      console.log(to);
       console.log(_.slice(local, from, to));
       return {
         pagination: pagination,
         data: _.slice(local, from, to)
       };
-    },
-    onActionClicked(action, data) {
-      console.log("slot actions: on-click", data.name);
     }
-    // onItemsPerPageChange(){
-    //   this.perPage= itemsPerPage;
-
-    // }
   }
 };
 </script>
@@ -561,6 +591,68 @@ export default {
     @media screen and (max-width: 767px) {
       height: 32px;
       font-size: 16px;
+    }
+  }
+}
+.modal-wrapper {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+  .paper-box {
+    max-width: 600px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    @media screen and (max-width: 639px) {
+      left: 20px;
+      right: 20px;
+      transform: translate(0, -50%);
+      width: calc(100% - 40px);
+    }
+    &_head {
+      border-color: lightblue;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+    &_content {
+      padding: 40px;
+      .model-content {
+        max-width: 400px;
+        margin: 0 auto;
+      }
+    }
+    .model-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      span {
+        font-size: 28px;
+        font-weight: bold;
+        color: $primaryText;
+        padding: 8px 0;
+        @media screen and (max-width: 767px) {
+          font-size: 20px;
+        }
+      }
+    }
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      margin-top: 40px;
+      .cb-btn {
+        height: 50px;
+        margin: 0 10px;
+        @media screen and (max-width: 767px) {
+          height: 36px;
+        }
+      }
     }
   }
 }
