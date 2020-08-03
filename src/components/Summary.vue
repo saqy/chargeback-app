@@ -46,17 +46,17 @@
 
           <div class="cb-filter ml-auto">
             <div class="cb-filter_btn bg-gray">
-              <span class="cb-filter_text">Filter</span>
+              <span class="cb-filter_text" @click="filterHandler()">{{selectedFilter}}</span>
               <span class="arrow-icon"></span>
             </div>
-            <!-- <ul class="cb-filter_list">
-              <li class="cb-filter_item">Item</li>
-              <li class="cb-filter_item">Item</li>
-              <li class="cb-filter_item">Item</li>
-              <li class="cb-filter_item">Item</li>
-              <li class="cb-filter_item">Item</li>
-              <li class="cb-filter_item">Item</li>
-            </ul>-->
+            <ul class="cb-filter_list" v-if="showFilters">
+              <li
+                v-for="c in columns"
+                :key="c.name"
+                class="cb-filter_item"
+                @click="selectFilter(c.name)"
+              >By {{c.name}}</li>
+            </ul>
           </div>
           <button class="cb-btn bg-blue">Export CSV</button>
         </div>
@@ -185,6 +185,8 @@ export default {
       actions: ["Calculate Totals", "Mark Disputed", "Reverse volume"],
       showActions: false,
       selectedAction: "Actions",
+      showFilters: false,
+      selectedFilter: "Select Filter",
       showModal: false,
       paginationInfo:{from: 0, to: 0, total:0}
     };
@@ -196,6 +198,13 @@ export default {
     selectAction: function(m) {
       this.selectedAction = m;
       this.showActions = !this.showActions;
+    },
+    filterHandler: function() {
+      this.showFilters = !this.showFilters;
+    },
+    selectFilter: function(m) {
+      this.selectedFilter = m;
+      this.showFilters = !this.showFilters;
     },
     toggleModal: function() {
       this.showModal = !this.showModal;
